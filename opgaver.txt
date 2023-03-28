@@ -1,0 +1,11 @@
+trin 1:
+ændre det væk fra titletekstvalue. (det skal hedde noget der giver mening)
+
+trin 2:
+implamenter så passwordet også bliver gemt på samme måde.
+
+trin 3:
+få det til at blive successfull login når man skriver det rigtige og ikke det forkerte.
+
+trin 4:
+Bliv sendt videre til et nyt skærmbillede
