@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import 'LoginInputField.dart';
 import 'package:eksamesprojekt_kiwi_app/GlobalState.dart';
+import 'MainMenu.dart';
 class LoginButtonstatefullWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _LoginButtonstatefullWidgetState();
 }
 
 class _LoginButtonstatefullWidgetState extends State<LoginButtonstatefullWidget> {
-  String username = "Kiwi1";
-  String password = "KiwiLover";
+
+  String username = "1";
+  String password = "2";
   LoginInputField loginInputField = LoginInputField();
   void Checkingpassanduser(String inputUsername,String inputPassword) {
-    if(inputUsername == username && inputPassword == password){
+    String storedUsername = store.get("Username") ?? ""; // Get the stored username
+    String storedPassword = store.get("Password") ?? ""; // Get the stored password
+    if(storedUsername == username && storedPassword == password){
       print("Successfull login");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MainMenu()),
+      );
+    } else {
+      print("failed login");
     }
   }
 
@@ -27,10 +37,9 @@ class _LoginButtonstatefullWidgetState extends State<LoginButtonstatefullWidget>
       ),
       child: ElevatedButton(
         onPressed: () {
-          Checkingpassanduser( "Kiwi1", "KiwiLover");
-          print(store.get("titleTextValue").toString());
-
-
+          String storedUsername = store.get("Username") ?? ""; // Get the stored username
+          String storedPassword = store.get("Password") ?? ""; // Get the stored password
+          Checkingpassanduser( storedUsername, storedPassword);
         },
         child: const Text ('Login'),
 
@@ -38,5 +47,3 @@ class _LoginButtonstatefullWidgetState extends State<LoginButtonstatefullWidget>
     );
   }
 }
-
-
