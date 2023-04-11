@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:eksamesprojekt_kiwi_app/GlobalState.dart';
+
 class CreateTur extends StatefulWidget {
   const CreateTur({Key? key}) : super(key: key);
 
@@ -8,17 +9,51 @@ class CreateTur extends StatefulWidget {
 }
 
 class _CreateTurState extends State<CreateTur> {
-  List<String> _titles = [    "Dato",    "Tid",    "Kaptajn",    "Ror",    "Forsejlstyrbord",    "Forsejlbagbord",    "Bagstag",    "Storsejl",    "Navigation",    "Fordæk",    "pitmand",    "Spiler"  ];
+  List<String> _titles = [
+    "Dato",
+    "Tid",
+    "Kaptajn",
+    "Ror",
+    "Forsejlstyrbord",
+    "Forsejlbagbord",
+    "Bagstag",
+    "Storsejl",
+    "Navigation",
+    "Fordæk",
+    "pitmand",
+    "Spiler"
+  ];
 
   List<String> _texts = List.filled(12, '');
+
+  bool _isTurValid() {
+    for (int i = 0; i < 3; i++) {
+      if (_texts[i].isEmpty) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   void _saveText(int index, String text) {
     _texts[index] = text;
     store.set("Tur", _texts);
+    setState(() {}); // rebuild the widget tree to reflect changes
   }
 
   void _onCreatePressed() {
-    print(_texts);
+    if (_isTurValid()) {
+      // create the tur and navigate back to the previous screen
+      Navigator.pop(context, _texts);
+    } else {
+      // show an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Please fill in the first 3 fields'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   @override
