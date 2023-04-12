@@ -16,7 +16,7 @@ class Database {
         print('Connected to PostgreSQL database');
 
         // Run the query to select all columns from the members table
-        final results = await conn.query('SELECT * FROM members');
+        final results = await conn.query('SELECT username FROM members');
 
         // Print the results
         print('Members:');

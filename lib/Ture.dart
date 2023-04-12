@@ -1,34 +1,32 @@
-import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
-class Ture{
-  final String Dato;
-  final String Tid;
-  final String kaptajn;
-  final String Ror;
-  final String Forsejlstyrbord;
-  final String Forsejlbagbord;
-  final String Bagstag;
-  final String Storsejl;
-  final String Navigation;
-  final String fordaek;
-  final String pitmand;
-  final String spiler;
+class Ture {
+  String id;
+  String Dato;
+  String Tid;
+  String kaptajn;
+  String Ror;
+  String Forsejlstyrbord;
+  String Forsejlbagbord;
+  String Bagstag;
+  String Storsejl;
+  String Navigation;
+  String fordaek;
+  String pitmand;
+  String spiler;
 
-
-  const Ture({
-    required this.Dato,
-    required this.Tid,
-    required this.kaptajn,
-    required this.Ror,
-    required this.Forsejlstyrbord,
-    required this.Forsejlbagbord,
-    required this.Bagstag,
-    required this.Storsejl,
-    required this.Navigation,
-    required this.fordaek,
-    required this.pitmand,
-    required this.spiler,
-
-});
-
+  Ture(
+      {required this.Dato,
+        required this.Tid,
+        required this.kaptajn,
+        required this.Ror,
+        required this.Forsejlstyrbord,
+        required this.Forsejlbagbord,
+        required this.Bagstag,
+        required this.Storsejl,
+        required this.Navigation,
+        required this.fordaek,
+        required this.pitmand,
+        required this.spiler})
+      : id = Uuid().v4();
 }

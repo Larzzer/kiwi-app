@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:eksamesprojekt_kiwi_app/GlobalState.dart';
 
 class CreateTur extends StatefulWidget {
-  const CreateTur({Key? key}) : super(key: key);
+  final List<String> initialValues;
+
+  const CreateTur({Key? key, required this.initialValues}) : super(key: key);
 
   @override
   _CreateTurState createState() => _CreateTurState();
@@ -24,7 +25,13 @@ class _CreateTurState extends State<CreateTur> {
     "Spiler"
   ];
 
-  List<String> _texts = List.filled(12, '');
+  late List<String> _texts;
+
+  @override
+  void initState() {
+    super.initState();
+    _texts = List.from(widget.initialValues);
+  }
 
   bool _isTurValid() {
     for (int i = 0; i < 3; i++) {
@@ -37,13 +44,12 @@ class _CreateTurState extends State<CreateTur> {
 
   void _saveText(int index, String text) {
     _texts[index] = text;
-    store.set("Tur", _texts);
     setState(() {}); // rebuild the widget tree to reflect changes
   }
 
   void _onCreatePressed() {
     if (_isTurValid()) {
-      // create the tur and navigate back to the previous screen
+      // return the edited values
       Navigator.pop(context, _texts);
     } else {
       // show an error message
@@ -60,12 +66,12 @@ class _CreateTurState extends State<CreateTur> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Tur'),
+        title: const Text('Edit Tur'),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _onCreatePressed,
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.save),
       ),
       body: Center(
         child: ConstrainedBox(
@@ -99,6 +105,7 @@ class _CreateTurState extends State<CreateTur> {
                         onChanged: (text) {
                           _saveText(index, text);
                         },
+                        controller: TextEditingController(text: _texts[index]),
                       ),
                     ),
                   ],
