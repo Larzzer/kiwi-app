@@ -77,7 +77,7 @@ class _LoginInputFieldState extends State<LoginInputField> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             TextButton(
-              onPressed: () {},
+              onPressed: _onRegistrationButtonPressed,
               child: Text(
                 "ny bruger",
                 style: TextStyle(
