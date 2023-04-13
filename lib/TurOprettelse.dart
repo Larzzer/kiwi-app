@@ -12,11 +12,12 @@ class TurOprettelse extends StatefulWidget {
 
 class _TurOprettelseState extends State<TurOprettelse> {
   List<Ture> _ture = [];
+  int numberOfPeople = 0;
 
-  void _navigateToCreateTur(BuildContext context) async {
+  void _navigateToCreateTur(BuildContext context, {List<String>? initialTexts}) async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const CreateTur()),
+      MaterialPageRoute(builder: (context) => CreateTur(initialTexts: initialTexts)),
     );
     if (result != null) {
       setState(() {
@@ -34,6 +35,31 @@ class _TurOprettelseState extends State<TurOprettelse> {
           pitmand: result[10],
           spiler: result[11],
         ));
+      });
+    }
+  }
+
+  void _navigateToEditTur(BuildContext context, int index) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CreateTur(initialTexts: _ture[index].toList())),
+    );
+    if (result != null) {
+      setState(() {
+        _ture[index] = Ture(
+          Dato: result[0],
+          Tid: result[1],
+          kaptajn: result[2],
+          Ror: result[3],
+          Forsejlstyrbord: result[4],
+          Forsejlbagbord: result[5],
+          Bagstag: result[6],
+          Storsejl: result[7],
+          Navigation: result[8],
+          fordaek: result[9],
+          pitmand: result[10],
+          spiler: result[11],
+        );
       });
     }
   }
@@ -59,6 +85,46 @@ class _TurOprettelseState extends State<TurOprettelse> {
       _ture.add(tur1);
     }
   }
+
+  void _deleteTur(BuildContext context) async {
+    final selectedIndex = await showDialog<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Vælg en tur at slette'),
+          content: Container(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: _ture.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text("Tur ${index + 1}"),
+                  subtitle: Row(
+                    children: [
+                      Text(_ture[index].Dato),
+                      SizedBox(width: 8),
+                      Text('${_ture[index].numberOfPeople}'),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.pop(context, index);
+                  },
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+
+    if (selectedIndex != null) {
+      setState(() {
+        _ture.removeAt(selectedIndex);
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -100,81 +166,16 @@ class _TurOprettelseState extends State<TurOprettelse> {
                     : ListView.builder(
                   itemCount: _ture.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 1.0,
-                        ),
-                      ),
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    return ListTile(
+                      title: Text("Tur ${index + 1}"),
+                      subtitle: Row(
                         children: [
-                          Text(
-                            'Dato: ${_ture[index].Dato}',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Tid: ${_ture[index].Tid}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Kaptajn: ${_ture[index].kaptajn}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Ror: ${_ture[index].Ror}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Forsejl styrbord: ${_ture[index].Forsejlstyrbord}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Forsejl bagbord: ${_ture[index].Forsejlbagbord}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Bagstag: ${_ture[index].Bagstag}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Storsejl: ${_ture[index].Storsejl}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Navigation: ${_ture[index].Navigation}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Fordæk: ${_ture[index].fordaek}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Pitmand: ${_ture[index].pitmand}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Spiler: ${_ture[index].spiler}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
+                          Text(_ture[index].Dato),
+                          SizedBox(width: 8),
+                          Text('${_ture[index].numberOfPeople}'),
                         ],
                       ),
+                      onTap: () => _navigateToEditTur(context, index),
                     );
                   },
                 ),
@@ -183,11 +184,64 @@ class _TurOprettelseState extends State<TurOprettelse> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _navigateToCreateTur(context),
-        tooltip: 'Opret en ny tur',
-        child: Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // Create trip button
+          FloatingActionButton(
+            onPressed: () => _navigateToCreateTur(context),
+            child: Icon(Icons.add),
+          ),
+          SizedBox(width: 16), // Add some spacing between the buttons
+          // Delete trip button
+          FloatingActionButton(
+            onPressed: () => _deleteTur(context),
+            child: Icon(Icons.delete),
+          ),
+          SizedBox(width: 16),
+          // Join trip button
+          FloatingActionButton(
+            onPressed: () {
+              // Show a dialog with a list of available trips
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Vælg en tur at deltage i'),
+                    content: Container(
+                      width: double.maxFinite,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _ture.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            title: Text("Tur ${index + 1}"),
+                            subtitle: Text(_ture[index].Dato),
+                            trailing: _ture[index].numberOfPeople == 0
+                                ? null // Show nothing if no one has joined the trip
+                                : Text('${_ture[index].numberOfPeople}'),
+                            onTap: () {
+                              // Join the selected trip
+                              setState(() {
+                                _ture[index].numberOfPeople++;
+                                numberOfPeople = _ture[index].numberOfPeople;
+                              });
+                              Navigator.pop(context); // Close the dialog
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: Icon(Icons.person_add),
+          ),
+        ],
       ),
     );
   }
 }
+
+GlobalState store = GlobalState.instance;

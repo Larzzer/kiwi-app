@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:eksamesprojekt_kiwi_app/GlobalState.dart';
 
 class CreateTur extends StatefulWidget {
-  const CreateTur({Key? key}) : super(key: key);
+  final List<String>? initialTexts;
+
+  const CreateTur({Key? key, this.initialTexts}) : super(key: key);
 
   @override
   _CreateTurState createState() => _CreateTurState();
@@ -24,7 +26,13 @@ class _CreateTurState extends State<CreateTur> {
     "Spiler"
   ];
 
-  List<String> _texts = List.filled(12, '');
+  late List<String> _texts;
+
+  @override
+  void initState() {
+    super.initState();
+    _texts = widget.initialTexts ?? List.filled(12, '');
+  }
 
   bool _isTurValid() {
     for (int i = 0; i < 3; i++) {
@@ -99,6 +107,7 @@ class _CreateTurState extends State<CreateTur> {
                         onChanged: (text) {
                           _saveText(index, text);
                         },
+                        controller: TextEditingController(text: _texts[index]),
                       ),
                     ),
                   ],
