@@ -172,7 +172,7 @@ class _TurOprettelseState extends State<TurOprettelse> {
                         children: [
                           Text(_ture[index].Dato),
                           SizedBox(width: 8),
-                          Text('${_ture[index].numberOfPeople}'),
+                          Text('|     Antal personer der deltager: ${_ture[index].numberOfPeople}'),
                         ],
                       ),
                       onTap: () => _navigateToEditTur(context, index),
@@ -216,10 +216,13 @@ class _TurOprettelseState extends State<TurOprettelse> {
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             title: Text("Tur ${index + 1}"),
-                            subtitle: Text(_ture[index].Dato),
-                            trailing: _ture[index].numberOfPeople == 0
-                                ? null // Show nothing if no one has joined the trip
-                                : Text('${_ture[index].numberOfPeople}'),
+                            subtitle: Row(
+                              children: [
+                                Text(_ture[index].Dato),
+                                SizedBox(width: 8),
+                                Text('|     Antal personer der deltager: ${_ture[index].numberOfPeople}'),
+                              ],
+                            ),
                             onTap: () {
                               // Join the selected trip
                               setState(() {
