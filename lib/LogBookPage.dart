@@ -90,7 +90,7 @@ class _LogbookPageState extends State<LogbookPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Logbook'),
+        title: const Text('Logbog'),
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
@@ -102,20 +102,20 @@ class _LogbookPageState extends State<LogbookPage> {
               final confirmed = await showDialog<bool>(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: const Text('Delete All Entries'),
-                  content: const Text('Are you sure you want to delete all entries?'),
+                  title: const Text('slet alle beskeder'),
+                  content: const Text('er du sikker på du vil slette det hele?'),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop(false);
                       },
-                      child: const Text('Cancel'),
+                      child: const Text('annullere'),
                     ),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop(true);
                       },
-                      child: const Text('Delete'),
+                      child: const Text('slet'),
                     ),
                   ],
                 ),
@@ -159,13 +159,13 @@ class _LogbookPageState extends State<LogbookPage> {
             child: TextField(
               controller: _textController,
               decoration: const InputDecoration(
-                hintText: 'Enter your log entry here',
+                hintText: 'skriv din logbog besked her',
               ),
             ),
           ),
           ElevatedButton(
             onPressed: _saveAndAddEntry,
-            child: const Text('Add Entry'),
+            child: const Text('tilføj note'),
           ),
           const SizedBox(height: 16.0),
           ElevatedButton(
@@ -174,7 +174,7 @@ class _LogbookPageState extends State<LogbookPage> {
                 entries.clear();
               });
             },
-            child: const Text('Delete All Entries'),
+            child: const Text('slet alle beskeder'),
           ),
         ],
       ),
@@ -252,7 +252,7 @@ class LogbookHistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Logbook History'),
+        title: const Text('Logbog Historie'),
       ),
       body: ListView.builder(
         itemCount: entries.length,

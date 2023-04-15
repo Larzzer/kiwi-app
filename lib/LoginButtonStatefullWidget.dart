@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'DatabaseConnection.dart';
 import 'LoginInputField.dart';
 import 'package:eksamesprojekt_kiwi_app/GlobalState.dart';
 import 'MainMenu.dart';
+import 'package:eksamesprojekt_kiwi_app/DatabaseConnection.dart';
+
 class LoginButtonstatefullWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _LoginButtonstatefullWidgetState();
@@ -11,11 +14,14 @@ class _LoginButtonstatefullWidgetState extends State<LoginButtonstatefullWidget>
 
   String username = "1";
   String password = "2";
+  
   LoginInputField loginInputField = LoginInputField();
-  void Checkingpassanduser(String inputUsername,String inputPassword) {
-    String storedUsername = store.get("Username") ?? ""; // Get the stored username
-    String storedPassword = store.get("Password") ?? ""; // Get the stored password
-    if(storedUsername == username && storedPassword == password){
+  Future<void> Checkingpassanduser() async {
+    String storedUsername = store.get("username") ?? ""; // Get the stored username
+    String storedPassword = store.get("password") ?? ""; // Get the stored password
+    List<Map<String, dynamic>> results = await Database.executeSql("SELECT username,password FROM members WHERE username = '"+storedUsername+"';");
+
+    if(storedUsername == results[0]["members"]["username"] && storedPassword == results[0]["members"]["password"]){
       print("Successfull login");
       Navigator.push(
         context,
@@ -37,9 +43,7 @@ class _LoginButtonstatefullWidgetState extends State<LoginButtonstatefullWidget>
       ),
       child: ElevatedButton(
         onPressed: () {
-          String storedUsername = store.get("Username") ?? ""; // Get the stored username
-          String storedPassword = store.get("Password") ?? ""; // Get the stored password
-          Checkingpassanduser( storedUsername, storedPassword);
+          Checkingpassanduser();
         },
         child: const Text ('Login'),
 

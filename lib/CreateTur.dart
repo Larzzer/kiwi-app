@@ -57,7 +57,7 @@ class _CreateTurState extends State<CreateTur> {
       // show an error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Please fill in the first 3 fields'),
+          content: const Text('Udfyld felterne: Dato,Tid og Kaptajn'),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -68,7 +68,7 @@ class _CreateTurState extends State<CreateTur> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Tur'),
+        title: const Text('Opret Tur'),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
@@ -99,7 +99,7 @@ class _CreateTurState extends State<CreateTur> {
                       width: double.infinity,
                       child: TextField(
                         decoration: const InputDecoration(
-                          hintText: 'Enter text here...',
+                          hintText: 'Skriv her',
                           border: OutlineInputBorder(),
                         ),
                         textAlign: TextAlign.center,

@@ -2,6 +2,8 @@ import 'package:eksamesprojekt_kiwi_app/LoginButtonStatefullWidget.dart';
 import 'package:flutter/material.dart';
 import 'GlobalState.dart';
 import 'package:eksamesprojekt_kiwi_app/RegistrationPage.dart';
+import 'main.dart';
+import 'DatabaseConnection.dart';
 
 class LoginInputField extends StatefulWidget {
 
@@ -10,7 +12,6 @@ class LoginInputField extends StatefulWidget {
 }
 
 class _LoginInputFieldState extends State<LoginInputField> {
-
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -44,10 +45,10 @@ class _LoginInputFieldState extends State<LoginInputField> {
           child: TextField(
             controller: _usernameController,
             onChanged: (String value){
-              store.set("Username", value);
+              store.set("username", value);
             },
             decoration: InputDecoration(
-                hintText: "Enter your username",
+                hintText: "Indsæt dit brugernavn",
                 hintStyle: TextStyle(color: Colors.grey),
                 border: InputBorder.none
             ),
@@ -63,10 +64,10 @@ class _LoginInputFieldState extends State<LoginInputField> {
           child: TextField(
             controller: _passwordController,
             onChanged: (String value){
-              store.set("Password", value);
+              store.set("password", value);
             },
             decoration: InputDecoration(
-                hintText: "Enter your password",
+                hintText: "Indsæt dit kodeord",
                 hintStyle: TextStyle(color: Colors.grey),
                 border: InputBorder.none
             ),
@@ -90,7 +91,7 @@ class _LoginInputFieldState extends State<LoginInputField> {
             TextButton(
               onPressed: () {},
               child: Text(
-                "Forgot Password?",
+                "Glemt kodeord?",
                 style: TextStyle(
                   color: Colors.blue,
                   fontWeight: FontWeight.bold,
